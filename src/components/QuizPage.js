@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function QuizPage() {
+export default function QuizPage(props) {
   const questions = (
     <div className="quiz__section">
       <h2 className="quiz__question">What is the answer to this quesstion?</h2>
@@ -16,7 +16,9 @@ export default function QuizPage() {
       <div className="blob blob__top__quiz"></div>
       <div className="blob blob__bottom__quiz"></div>
       {questions}
-      <button className="quiz__check">Check Answers</button>
+      <button className="quiz__check" onClick={props.handleClick}>
+        Check Answers
+      </button>
     </div>
   );
 }
