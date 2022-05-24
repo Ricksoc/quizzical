@@ -1,9 +1,10 @@
 import React from "react";
+import StartPage from "./StartPage";
 
 export default function App() {
-    return (
-        <div className="main">
-            <h1>Hello, world!</h1>
-        </div>
-    )
+  return (
+    <main>
+      <StartPage />
+    </main>
+  );
 }

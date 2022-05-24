@@ -12,10 +12,71 @@ html {
 body {
   padding: 0;
   margin: 0;
+  background-color: #000000;
+  font-family: "Inter", sans-serif;
+  color: #293264;
 }
 
 input,
 textarea,
 button {
   font-family: inherit;
+}
+
+main {
+  height: 550px;
+  width: 550px;
+  background-color: #f5f7fb;
+  margin: 50px auto;
+}
+
+.start {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.blob {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.blob__top {
+  background-color: #fffad1;
+  right: 0;
+  transform: translate(30%, -25%);
+}
+
+.blob__bottom {
+  background-color: #dee8f8;
+  bottom: 0;
+  left: 0;
+  transform: translate(-30%, 25%);
+}
+
+.start__title {
+  font-family: "Karla", sans-serif;
+  font-weight: 700;
+  margin-top: 218px;
+  margin-bottom: 7px;
+}
+
+.start__description {
+  margin-top: 7px;
+  margin-bottom: 29px;
+}
+
+.button__start {
+  height: 52px;
+  width: 193px;
+  border-radius: 15px;
+  border: none;
+  background-color: #4d5b9e;
+  color: #f5f7fb;
+  font-weight: 500;
 }
