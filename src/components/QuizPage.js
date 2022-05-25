@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
-import Question from "./Question";
+import Answer from "./Answer";
 
 export default function QuizPage(props) {
+  //Initialise array for storing answers and correct answers
+  const [answerArray, setAnswerArray] = useState([]);
+
   // Durstenfield shuffle algorithm to randomise array of answers
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -14,6 +17,8 @@ export default function QuizPage(props) {
   }
 
   // Select answer to question when clicked
+  //Function will highlight clicked answer for each question on the page
+
   function selectAnswer(event) {
     const { name, value } = event.target;
 
@@ -30,17 +35,26 @@ export default function QuizPage(props) {
         el.classList.remove("selected");
       }
     });
+
+    // setAnswerArray((prevAnswers) => ({
+    //   ...prevAnswers,
+    //   [name]: value,
+    // }));
   }
+  // console.log(answerArray);
 
   // Initailise counter for question number
   let counter = 0;
 
+  // Create question-answer blocks
+
+  useEffect(() => {});
   const quiz = props.questions.map((question) => {
     counter++;
     // Variable to store question number
     let questionNumber = `question${counter}`;
 
-    // Get array of answers and shuffle it
+    // Get array of answers for the question and shuffle it
     const answers = [];
     answers.push(
       question.correct_answer.replace(/&quot;/g, '"').replace(/&#039;/g, "'")
@@ -50,6 +64,7 @@ export default function QuizPage(props) {
     });
     shuffleArray(answers);
 
+    // Return the question-answer block
     return (
       <div className="quiz__section" key={nanoid()}>
         <h2 className="quiz__question">
@@ -57,7 +72,7 @@ export default function QuizPage(props) {
         </h2>
         {answers.map((answer) => {
           return (
-            <Question
+            <Answer
               key={nanoid()}
               className="quiz__answer"
               questionNumber={questionNumber}

@@ -1,7 +1,7 @@
 import React from "react";
 import { nanoid } from "nanoid";
 
-export default function Question(props) {
+export default function Answer(props) {
   return (
     <button
       key={nanoid()}
