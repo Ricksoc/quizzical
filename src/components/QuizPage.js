@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
 export default function QuizPage(props) {
-  console.log(props.questions);
-
   // Durstenfield shuffle algorithm to randomise array of answers
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -14,7 +12,29 @@ export default function QuizPage(props) {
     }
   }
 
+  // Select answer to question when clicked
+  function selectAnswer(event) {
+    const { name, value } = event.target;
+    const elements = document.querySelectorAll(
+      "[name=" + CSS.escape(name) + "]"
+    );
+    elements.forEach((el) => {
+      if (el.value === value) {
+        el.classList.add("selected");
+      } else {
+        el.classList.remove("selected");
+      }
+    });
+  }
+
+  // Initailise counter for question number
+  let counter = 0;
+
   const quiz = props.questions.map((question) => {
+    counter++;
+    // Variable to store question number
+    let questionNumber = `question${counter}`;
+
     // Get array of answers and shuffle it
     const answers = [];
     answers.push(
@@ -32,8 +52,14 @@ export default function QuizPage(props) {
         </h2>
         {answers.map((answer) => {
           return (
-            <button className="quiz__answer">
-              {answer.replace(/&quot;/g, '"').replace(/&#039;/g, "'")}
+            <button
+              key={nanoid()}
+              className="quiz__answer"
+              name={questionNumber}
+              value={answer}
+              onClick={selectAnswer}
+            >
+              {answer}
             </button>
           );
         })}
