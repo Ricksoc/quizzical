@@ -14,7 +14,7 @@ export default function App() {
     setQuestions(
       data.results.map((item) => {
         return {
-          id: item.id,
+          id: nanoid(),
           correctAnswer: item.correct_answer
             .replace(/&quot;/g, '"')
             .replace(/&#039;/g, "'"),
@@ -35,14 +35,55 @@ export default function App() {
     return (
       <Quiz
         key={nanoid()}
+        id={question.id}
         correctAnswer={question.correctAnswer}
         question={question.question}
         answers={question.answers}
+        handleClick={handleSelected}
       />
     );
   });
 
   // console.log(quiz);
+
+  // Durstenfield shuffle algorithm to randomise array of answers
+  function shuffleArray(array) {
+    // algorithm operates on original array => create new array to be returned
+    // use opportunity to clean up text with .replace
+    let arr = array.map((item) => {
+      return {
+        answer: item.replace(/&quot;/g, '"').replace(/&#039;/g, "'"),
+        id: nanoid(),
+        isSelected: false,
+      };
+    });
+    for (let i = arr.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = temp;
+    }
+    return arr;
+  }
+
+  function handleSelected(Qid, Aid, Qanswer) {
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((question) => {
+        if (question.id === Qid) {
+          return {
+            ...question,
+            answers: question.answers.map((ans) => {
+              return ans.id === Aid
+                ? { ...ans, isSelected: !ans.isSelected }
+                : { ...ans, isSelected: false };
+            }),
+          };
+        } else {
+          return question;
+        }
+      })
+    );
+  }
 
   return (
     <main>
@@ -59,20 +100,4 @@ export default function App() {
       )}
     </main>
   );
-}
-
-// Durstenfield shuffle algorithm to randomise array of answers
-function shuffleArray(array) {
-  // algorithm operates on original array => create new array to be returned
-  // use opportunity to clean up text with .replace
-  let arr = array.map((item) =>
-    item.replace(/&quot;/g, '"').replace(/&#039;/g, "'")
-  );
-  for (let i = arr.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    let temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-  }
-  return arr;
 }

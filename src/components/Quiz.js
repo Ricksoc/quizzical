@@ -9,12 +9,15 @@ export default function Quiz(props) {
         return (
           <button
             key={nanoid()}
-            className="quiz__answer"
-            // name={props.questionNumber}
-            value={answer}
-            // onClick={(event) => props.handleClick(event)}
+            className={
+              answer.isSelected ? "quiz__answer selected" : "quiz__answer"
+            }
+            value={answer.answer}
+            onClick={() =>
+              props.handleClick(props.id, answer.id, answer.answer)
+            }
           >
-            {answer}
+            {answer.answer}
           </button>
         );
       })}
