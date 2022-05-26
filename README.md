@@ -1,6 +1,6 @@
 # Quizzical
 
-[](./screenshot_start.png)
+![](./screenshot_start.png)
 
 Quizzical is a simple Q&A game where the user ansers up to 10 questions to see how many they can get correct.
 
