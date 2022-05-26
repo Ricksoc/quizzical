@@ -28,5 +28,5 @@ Of particular note for me on this project:
 
 
 ### Acknowledgements
-* Brian Ziroll from freeCodeCamp for the course
+* Bob Ziroll from freeCodeCamp for the course
 * An encoding of the Durstenfield shuffle which I borrowed to randomise where the correct answer appeared in the list of options.
