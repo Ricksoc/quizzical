@@ -123,7 +123,7 @@ main {
 
 .quiz__answer {
   min-width: 66px;
-  height: 21px;
+  min-height: 21px;
   border-radius: 7px;
   font-weight: 500;
   font-size: 0.75rem;
@@ -154,4 +154,23 @@ main {
 
 .selected {
   background-color: #dbdef0;
+}
+
+.red {
+  background-color: lightcoral;
+}
+
+.green {
+  background-color: lightgreen;
+}
+
+.footer {
+  display: flex;
+  padding: 0 20px;
+  column-gap: 25px;
+}
+
+.score {
+  font-weight: 700;
+  font-size: 0.8rem;
 }

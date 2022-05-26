@@ -6,6 +6,7 @@ import Quiz from "./Quiz";
 export default function App() {
   const [startQuiz, setStartQuiz] = useState(false);
   const [questions, setQuestions] = useState([]);
+  const [scoreQuiz, setScoreQuiz] = useState(true);
 
   async function beginQuiz() {
     const response = await fetch("https://opentdb.com/api.php?amount=5");
@@ -41,6 +42,8 @@ export default function App() {
         question={question.question}
         answers={question.answers}
         handleClick={handleSelected}
+        correct={question.correct}
+        scoreQuiz={scoreQuiz}
       />
     );
   });
@@ -100,7 +103,14 @@ export default function App() {
           <div className="blob blob__top__quiz"></div>
           <div className="blob blob__bottom__quiz"></div>
           {quiz}
-          <button className="quiz__check">Check Answers</button>
+          <div className="footer">
+            {scoreQuiz && (
+              <h4 className="score">You scored x/5 correct answers</h4>
+            )}
+            <button className="quiz__check">
+              {scoreQuiz ? "Play Again" : "Check Answers"}
+            </button>
+          </div>
         </div>
       ) : (
         <StartPage handleClick={beginQuiz} />

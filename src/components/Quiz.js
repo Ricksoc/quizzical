@@ -9,15 +9,21 @@ export default function Quiz(props) {
         return (
           <button
             key={nanoid()}
-            // Apply highlighted style to clicked answer
+            // Apply highlighted style to answer based on correctness and if clicked
             className={
-              answer.isSelected ? "quiz__answer selected" : "quiz__answer"
+              props.scoreQuiz &&
+              props.correctAnswer === answer.answer &&
+              answer.isSelected
+                ? "quiz__answer green"
+                : props.scoreQuiz && answer.isSelected
+                ? "quiz__answer red"
+                : answer.isSelected
+                ? "quiz__answer selected"
+                : "quiz__answer"
             }
             value={answer.answer}
             // Pass back information needed to identify selected question and answer
-            onClick={() =>
-              props.handleClick(props.questionId, answer.id)
-            }
+            onClick={() => props.handleClick(props.questionId, answer.id)}
           >
             {answer.answer}
           </button>
