@@ -37,19 +37,15 @@ export default function App() {
   //Makes API request and forms data into more useable object
   async function beginQuiz() {
     const response = await fetch(
-      `https://opentdb.com/api.php?amount=${noQuestions}${category}`
+      `https://opentdb.com/api.php?amount=${noQuestions}${category}&encode=url3986`
     );
     const data = await response.json();
     setQuestions(
       data.results.map((item) => {
         return {
           questionId: nanoid(),
-          correctAnswer: item.correct_answer
-            .replace(/&quot;/g, '"')
-            .replace(/&#039;/g, "'"),
-          question: item.question
-            .replace(/&quot;/g, '"')
-            .replace(/&#039;/g, "'"),
+          correctAnswer: decodeURIComponent(item.correct_answer),
+          question: decodeURIComponent(item.question),
           answers: shuffleArray([
             ...item.incorrect_answers,
             item.correct_answer,
@@ -83,7 +79,7 @@ export default function App() {
     // use opportunity to clean up text with .replace
     let arr = array.map((item) => {
       return {
-        answer: item.replace(/&quot;/g, '"').replace(/&#039;/g, "'"),
+        answer: decodeURIComponent(item),
         id: nanoid(),
         isSelected: false,
       };

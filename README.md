@@ -25,6 +25,7 @@ Of particular note for me on this project:
 * async await in React
 * Manipulation of main object via useState Set function
 * Refactoring to improve code as I went
+* Using decodeURIComponent with the correct API encoding to correctly render text
 
 
 ### Acknowledgements
