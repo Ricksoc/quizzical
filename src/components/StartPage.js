@@ -6,7 +6,21 @@ export default function StartPage(props) {
       <div className="blob blob__top__start"></div>
       <div className="blob blob__bottom__start"></div>
       <h1 className="start__title">Quizzical</h1>
-      <p className="start__description">Add description later</p>
+      <div className="apiInput">
+        <label htmlFor="noQuestions" className="apiInput__label">
+          Choose 1-10 questions
+        </label>
+        <input
+          className="apiInput__input"
+          type="number"
+          name="noQuestions"
+          id="noQuestions"
+          min="1"
+          max="10"
+          value={props.noQuestions}
+          onChange={props.handleChange}
+        />
+      </div>
       <button className="button__start" onClick={props.handleClick}>
         Start Quiz
       </button>

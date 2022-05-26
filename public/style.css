@@ -101,6 +101,23 @@ main {
   cursor: pointer;
 }
 
+.apiInput {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  margin: 10px 0;
+}
+
+.apiInput__label {
+  font-size: 0.8rem;
+}
+
+.apiInput__input {
+  border-radius: 2px;
+  border: #4d5b9e 1px solid;
+  width: 35px;
+}
+
 /* Quiz Questions Section */
 
 .quiz__container {

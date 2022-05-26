@@ -4,6 +4,8 @@ import StartPage from "./StartPage";
 import Quiz from "./Quiz";
 
 export default function App() {
+  //Stores number of questions for quiz
+  const [noQuestions, setNoQuestions] = useState(5);
   //Controls whether StartPage or Quiz render
   const [startQuiz, setStartQuiz] = useState(false);
   //Takes data from API in more useable form
@@ -13,9 +15,24 @@ export default function App() {
   //Stores total of correct answer
   const [score, setScore] = useState(0);
 
+  function chooseQuiz(event) {
+    const { name, value } = event.target;
+    if (name === "noQuestions") {
+      if (value < 1) {
+        setNoQuestions(1);
+      } else if (value > 10) {
+        setNoQuestions(10);
+      } else {
+        setNoQuestions(value);
+      }
+    }
+  }
+
   //Makes API request and forms data into more useable object
   async function beginQuiz() {
-    const response = await fetch("https://opentdb.com/api.php?amount=5");
+    const response = await fetch(
+      `https://opentdb.com/api.php?amount=${noQuestions}`
+    );
     const data = await response.json();
     setQuestions(
       data.results.map((item) => {
@@ -116,6 +133,7 @@ export default function App() {
     setStartQuiz(false);
     setScoreQuiz(false);
     setScore(0);
+    setNoQuestions(5);
   }
 
   return (
@@ -127,7 +145,9 @@ export default function App() {
           {quiz}
           <div className="footer">
             {scoreQuiz && (
-              <h4 className="score">You scored {score}/5 correct answers</h4>
+              <h4 className="score">
+                You scored {score}/{noQuestions} correct answers
+              </h4>
             )}
             <button
               className="quiz__check"
@@ -138,7 +158,11 @@ export default function App() {
           </div>
         </div>
       ) : (
-        <StartPage handleClick={beginQuiz} />
+        <StartPage
+          handleClick={beginQuiz}
+          handleChange={chooseQuiz}
+          noQuestions={noQuestions}
+        />
       )}
     </main>
   );
