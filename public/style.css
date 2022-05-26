@@ -112,7 +112,7 @@ main {
   font-size: 0.8rem;
 }
 
-.apiInput__input {
+.apiInput__number {
   border-radius: 2px;
   border: #4d5b9e 1px solid;
   width: 35px;

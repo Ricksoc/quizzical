@@ -6,6 +6,8 @@ import Quiz from "./Quiz";
 export default function App() {
   //Stores number of questions for quiz
   const [noQuestions, setNoQuestions] = useState(5);
+  //Stores category API code
+  const [category, setCategory] = useState("");
   //Controls whether StartPage or Quiz render
   const [startQuiz, setStartQuiz] = useState(false);
   //Takes data from API in more useable form
@@ -15,8 +17,10 @@ export default function App() {
   //Stores total of correct answer
   const [score, setScore] = useState(0);
 
+  //Take input from StartPage for API call
   function chooseQuiz(event) {
     const { name, value } = event.target;
+    //Control number of questions to be 1-10
     if (name === "noQuestions") {
       if (value < 1) {
         setNoQuestions(1);
@@ -25,13 +29,15 @@ export default function App() {
       } else {
         setNoQuestions(value);
       }
+    } else {
+      setCategory(value);
     }
   }
 
   //Makes API request and forms data into more useable object
   async function beginQuiz() {
     const response = await fetch(
-      `https://opentdb.com/api.php?amount=${noQuestions}`
+      `https://opentdb.com/api.php?amount=${noQuestions}${category}`
     );
     const data = await response.json();
     setQuestions(
@@ -134,6 +140,7 @@ export default function App() {
     setScoreQuiz(false);
     setScore(0);
     setNoQuestions(5);
+    setCategory("");
   }
 
   return (
@@ -162,6 +169,7 @@ export default function App() {
           handleClick={beginQuiz}
           handleChange={chooseQuiz}
           noQuestions={noQuestions}
+          category={category}
         />
       )}
     </main>
