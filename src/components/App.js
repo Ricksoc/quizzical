@@ -14,7 +14,7 @@ export default function App() {
     setQuestions(
       data.results.map((item) => {
         return {
-          id: nanoid(),
+          questionId: nanoid(),
           correctAnswer: item.correct_answer
             .replace(/&quot;/g, '"')
             .replace(/&#039;/g, "'"),
@@ -25,6 +25,7 @@ export default function App() {
             ...item.incorrect_answers,
             item.correct_answer,
           ]),
+          correct: false,
         };
       })
     );
@@ -35,7 +36,7 @@ export default function App() {
     return (
       <Quiz
         key={nanoid()}
-        id={question.id}
+        questionId={question.questionId}
         correctAnswer={question.correctAnswer}
         question={question.question}
         answers={question.answers}
@@ -66,17 +67,23 @@ export default function App() {
     return arr;
   }
 
-  function handleSelected(Qid, Aid, Qanswer) {
+  function handleSelected(questionId, answerId) {
     setQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
-        if (question.id === Qid) {
+        // Select only the answers corresponding to a single question
+        if (question.questionId === questionId) {
           return {
             ...question,
             answers: question.answers.map((ans) => {
-              return ans.id === Aid
+              return ans.id === answerId
                 ? { ...ans, isSelected: !ans.isSelected }
                 : { ...ans, isSelected: false };
             }),
+            correct:
+              question.correctAnswer ===
+              question.answers.find((ans) => ans.id === answerId).answer
+                ? true
+                : false,
           };
         } else {
           return question;
