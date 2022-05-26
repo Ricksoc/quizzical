@@ -4,15 +4,19 @@ import StartPage from "./StartPage";
 import Quiz from "./Quiz";
 
 export default function App() {
+  //Controls whether StartPage or Quiz render
   const [startQuiz, setStartQuiz] = useState(false);
+  //Takes data from API in more useable form
   const [questions, setQuestions] = useState([]);
+  //Flipped to true to initiate quiz evaluation
   const [scoreQuiz, setScoreQuiz] = useState(false);
+  //Stores total of correct answer
   const [score, setScore] = useState(0);
 
+  //Makes API request and forms data into more useable object
   async function beginQuiz() {
     const response = await fetch("https://opentdb.com/api.php?amount=5");
     const data = await response.json();
-    // console.log(data.results);
     setQuestions(
       data.results.map((item) => {
         return {
@@ -30,9 +34,11 @@ export default function App() {
         };
       })
     );
+    //Switch from rendering StartPage to Quiz
     setStartQuiz((prevState) => !prevState);
   }
 
+  //Create array of question-answer blocks
   const quiz = questions.map((question) => {
     return (
       <Quiz
@@ -47,8 +53,6 @@ export default function App() {
       />
     );
   });
-
-  // console.log(quiz);
 
   // Durstenfield shuffle algorithm to randomise array of answers
   function shuffleArray(array) {
@@ -70,6 +74,8 @@ export default function App() {
     return arr;
   }
 
+  //Runs when answer button clicked.
+  //Flips isSelected for clicked answer which controls dynamic className
   function handleSelected(questionId, answerId) {
     setQuestions((prevQuestions) =>
       prevQuestions.map((question) => {
@@ -90,6 +96,9 @@ export default function App() {
     );
   }
 
+  /*Runs when "Check Answers" is clicked
+  Iterates over questions state array and updates score if correct answer
+  has been selected. Also flips scoreQuiz state*/
   function checkScore() {
     questions.forEach((question) => {
       question.answers.forEach((answer) => {
@@ -100,9 +109,17 @@ export default function App() {
     });
     setScoreQuiz(true);
   }
+
+  /*Runs when "Play Again" is clicked.
+  Resets startQuiz, scoreQuiz and Score states*/
+  function resetGame() {
+    setStartQuiz(false);
+    setScoreQuiz(false);
+    setScore(0);
+  }
+
   return (
     <main>
-      {/* <StartPage handleClick={beginQuiz} /> */}
       {startQuiz ? (
         <div className="quiz__container">
           <div className="blob blob__top__quiz"></div>
@@ -112,7 +129,10 @@ export default function App() {
             {scoreQuiz && (
               <h4 className="score">You scored {score}/5 correct answers</h4>
             )}
-            <button className="quiz__check" onClick={checkScore}>
+            <button
+              className="quiz__check"
+              onClick={scoreQuiz ? resetGame : checkScore}
+            >
               {scoreQuiz ? "Play Again" : "Check Answers"}
             </button>
           </div>
