@@ -141,7 +141,7 @@ main {
 }
 
 .quiz__check {
-  align-self: center;
+  /* align-self: center; */
   width: 120px;
   height: 35px;
   border-radius: 10px;
@@ -165,6 +165,8 @@ main {
 }
 
 .footer {
+  width: 100%;
+  justify-content: center;
   display: flex;
   padding: 0 20px;
   column-gap: 25px;

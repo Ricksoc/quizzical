@@ -11,9 +11,10 @@ export default function Quiz(props) {
             key={nanoid()}
             // Apply highlighted style to answer based on correctness and if clicked
             className={
-              props.scoreQuiz &&
-              props.correctAnswer === answer.answer &&
-              answer.isSelected
+              (props.scoreQuiz &&
+                props.correctAnswer === answer.answer &&
+                answer.isSelected) ||
+              (props.scoreQuiz && props.correctAnswer === answer.answer)
                 ? "quiz__answer green"
                 : props.scoreQuiz && answer.isSelected
                 ? "quiz__answer red"

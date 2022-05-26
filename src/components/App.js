@@ -6,7 +6,8 @@ import Quiz from "./Quiz";
 export default function App() {
   const [startQuiz, setStartQuiz] = useState(false);
   const [questions, setQuestions] = useState([]);
-  const [scoreQuiz, setScoreQuiz] = useState(true);
+  const [scoreQuiz, setScoreQuiz] = useState(false);
+  const [score, setScore] = useState(0);
 
   async function beginQuiz() {
     const response = await fetch("https://opentdb.com/api.php?amount=5");
@@ -26,7 +27,6 @@ export default function App() {
             ...item.incorrect_answers,
             item.correct_answer,
           ]),
-          correct: false,
         };
       })
     );
@@ -82,11 +82,6 @@ export default function App() {
                 ? { ...ans, isSelected: !ans.isSelected }
                 : { ...ans, isSelected: false };
             }),
-            correct:
-              question.correctAnswer ===
-              question.answers.find((ans) => ans.id === answerId).answer
-                ? true
-                : false,
           };
         } else {
           return question;
@@ -95,6 +90,16 @@ export default function App() {
     );
   }
 
+  function checkScore() {
+    questions.forEach((question) => {
+      question.answers.forEach((answer) => {
+        if (question.correctAnswer === answer.answer && answer.isSelected) {
+          setScore((prevScore) => prevScore + 1);
+        }
+      });
+    });
+    setScoreQuiz(true);
+  }
   return (
     <main>
       {/* <StartPage handleClick={beginQuiz} /> */}
@@ -105,9 +110,9 @@ export default function App() {
           {quiz}
           <div className="footer">
             {scoreQuiz && (
-              <h4 className="score">You scored x/5 correct answers</h4>
+              <h4 className="score">You scored {score}/5 correct answers</h4>
             )}
-            <button className="quiz__check">
+            <button className="quiz__check" onClick={checkScore}>
               {scoreQuiz ? "Play Again" : "Check Answers"}
             </button>
           </div>
