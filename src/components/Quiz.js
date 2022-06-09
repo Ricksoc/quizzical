@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
-export default function Quiz2(props) {
+export default function Quiz(props) {
   //Takes data from API in more useable form
   const [questions, setQuestions] = useState([]);
   //Flipped to true to initiate quiz evaluation

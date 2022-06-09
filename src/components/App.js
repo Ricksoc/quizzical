@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import { nanoid } from "nanoid";
 import StartPage from "./StartPage";
-import Quiz2 from "./Quiz2";
+import Quiz from "./Quiz";
 
 export default function App2() {
   //Stores number of questions for quiz
@@ -39,7 +39,7 @@ export default function App2() {
   return (
     <main>
       {startQuiz ? (
-        <Quiz2
+        <Quiz
           category={category}
           noQuestions={noQuestions}
           resetQuiz={resetQuiz}
